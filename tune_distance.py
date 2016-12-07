@@ -6,6 +6,7 @@ import numpy as np
 import numpy.linalg
 import rpy2.robjects as robjects
 from collections import defaultdict
+sigDir = './sig'
 
 robjects.r['library']('lpSolve')
 transport = robjects.r['lp.transport']
@@ -63,7 +64,6 @@ def calcEMD(sigfile1, sigfile2):
 	col_rhs = robjects.FloatVector(w2)
 
 	t = transport(costs, "min", row_signs, row_rhs, col_signs, col_rhs)
-	print t
 	flow = t.rx2('solution')
 
 	dist = dist.reshape(len(w1), len(w2))
@@ -78,10 +78,18 @@ if __name__ == "__main__":
 		sys.exit()
 	
 	targetSigPath = sys.argv[1]
-	sigDir = "sig"
+	data = defaultdict(float)
 
 	for sigFile in os.listdir(sigDir):
 		sigPath = os.path.join(sigDir, sigFile)
 		emd = calcEMD(targetSigPath, sigPath)
-		print emd
 		if emd < 0: continue
+		data[sigFile] = emd
+
+	N = 10
+	rank = 0
+	for sigFile, emd in sorted(data.items(), key=lambda x:x[1], reverse=False)[:N]:
+		fname = sigFile.split(".")
+		if rank == 0: print "target song : %s" % fname[0]
+		else: print "%d\t%.2f\t%s" % (rank, emd, fname[0])
+		rank += 1

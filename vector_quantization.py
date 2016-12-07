@@ -5,6 +5,7 @@ import struct
 import sys
 import numpy as np
 import scipy.cluster
+import eyeD3
 mfccDir='mfcc'
 sigDir ='./sig'
 
@@ -41,7 +42,7 @@ if __name__ == "__main__":
 		fout = open(sigfile, "w")
 
 		mfc = loadMFCC(mfccfile, 20)
-		mfcc = np.delete(mfc, np.where(mfc == 0)[0],0)
+		mfcc = np.delete(mfc, np.where(mfc==0)[0],0)
 		code = VQ(mfcc, 16)
 
 		for k in range(16):
