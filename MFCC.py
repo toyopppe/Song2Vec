@@ -3,13 +3,13 @@
 import os
 import sys
 
-mp3Dir = u"music_mp3"
-mfccDir = u"./mfcc"
+mp3Dir = u"mmm"
+mfccDir = u"./mmmfcc"
 
 def mp3_to_raw(mp3file, rawfile):
 	os.system("lame --resample 16 -b 32 -a '%s' temp.mp3" % mp3file)
 	os.system("lame --decode temp.mp3 temp.wav")
-	os.system("sox temp.wav %s reverse vad reverse" % rawfile)
+	os.system("sox temp.wav %s" % rawfile)
 	os.remove("temp.wav")
 
 def calculate_mfcc(rawfile, mfccfile):

@@ -1,6 +1,5 @@
 #!/usr/bin/env pyhton
 #! -*- coding: utf-8 -*-
-import os
 import struct
 import sys
 import numpy as np
@@ -22,7 +21,6 @@ while True:
 f.close()
 
 mfcc = np.array(mfcc)
-print mfcc
 numframe = len(mfcc) / dimension
 
 if numframe * dimension != len(mfcc):
@@ -30,5 +28,5 @@ if numframe * dimension != len(mfcc):
 	sys.exit(1)
 
 mfcc = mfcc.reshape(numframe, dimension)
-#for i in range(len(mfcc)):
-#	print "\t".join("%.2f" % x for x in mfcc[i,])
+for i in range(len(mfcc)):
+	print "\t".join("%.2f" % x for x in mfcc[i,])

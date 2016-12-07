@@ -21,8 +21,8 @@ def loadMFCC(mfccfile, dimension):
 	mfcc = np.array(mfcc)
 	numframe = len(mfcc) / dimension
 	mfcc = mfcc.reshape(numframe, dimension)
-
 	return mfcc
+
 
 def VQ(mfcc, k):
 	codebook, destortion = scipy.cluster.vq.kmeans(mfcc, k)
@@ -40,7 +40,8 @@ if __name__ == "__main__":
 
 		fout = open(sigfile, "w")
 
-		mfcc = loadMFCC(mfccfile, 20)
+		mfc = loadMFCC(mfccfile, 20)
+		mfcc = np.delete(mfc, np.where(mfc == 0)[0],0)
 		code = VQ(mfcc, 16)
 
 		for k in range(16):
@@ -48,8 +49,9 @@ if __name__ == "__main__":
 			m = np.apply_along_axis(np.mean, 0, frames)
 			sigma = np.cov(frames.T)
 			w = len(frames)
-	
+
 			features = np.hstack((w, m, sigma.flatten()))
 			features = [str(x) for x in features]
+			print features
 			fout.write(" ".join(features) + "\n")
 		fout.close()
