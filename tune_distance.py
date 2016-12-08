@@ -7,6 +7,7 @@ import numpy.linalg
 import rpy2.robjects as robjects
 from collections import defaultdict
 
+sigDir = "./sig/RADWIMPS"
 robjects.r['library']('lpSolve')
 transport = robjects.r['lp.transport']
 
@@ -78,7 +79,6 @@ if __name__ == "__main__":
 		sys.exit()
 	
 	targetSigPath = sys.argv[1]
-	sigDir = "sig"
 
 	for sigFile in os.listdir(sigDir):
 		sigPath = os.path.join(sigDir, sigFile)

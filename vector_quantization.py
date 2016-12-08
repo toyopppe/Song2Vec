@@ -5,8 +5,8 @@ import struct
 import sys
 import numpy as np
 import scipy.cluster
-mfccDir='mfcc'
-sigDir ='./sig'
+mfccDir='./mfcc/RADWIMPS'
+sigDir ='./sig/RADWIMPS'
 
 def loadMFCC(mfccfile, dimension):
 	mfcc = []
@@ -52,6 +52,5 @@ if __name__ == "__main__":
 
 			features = np.hstack((w, m, sigma.flatten()))
 			features = [str(x) for x in features]
-			print features
 			fout.write(" ".join(features) + "\n")
 		fout.close()
